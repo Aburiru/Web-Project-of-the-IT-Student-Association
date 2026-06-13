@@ -1,0 +1,152 @@
+# ===================================
+# WORDPRESS GITIGNORE - HMJTI Project
+# ===================================
+
+# ============================================================
+# CRITICAL SECURITY FILES - NEVER COMMIT THESE
+# ============================================================
+wp-config.php
+.env
+.env.*
+**/wp-config-local.php
+**/local-config.php
+*.pem
+*.key
+*.crt
+
+# ============================================================
+# DATABASE & BACKUPS - CONTAINS SENSITIVE DATA
+# ============================================================
+*.sql
+*.sql.gz
+*.sql.zip
+*.sql.bz2
+*.db
+wp-content/database/
+wp-content/database-old/
+wp-content/updraft/
+wp-content/backup*/
+wp-content/backups/
+wp-content/ai1wm-backups/
+*.wpress
+
+# ============================================================
+# CACHE & TEMPORARY FILES
+# ============================================================
+wp-content/cache/
+wp-content/w3tc-config/
+wp-content/object-cache.php
+wp-content/advanced-cache.php
+wp-content/wp-cache-config.php
+wp-content/upgrade/
+.tmb/
+*.tmp
+
+# ============================================================
+# LOGS - MAY CONTAIN SENSITIVE INFORMATION
+# ============================================================
+*.log
+error_log
+debug.log
+wp-content/debug.log
+wp-content/wflogs/
+logs/
+
+# ============================================================
+# OLD/BACKUP FILES
+# ============================================================
+*-old/
+*-old.*
+*.bak
+*.backup
+*.orig
+*~
+wp-content/plugins-old/
+wp-content/themes-old/
+wp-content/uploads-old/
+wp-content/fonts-old/
+*.php-old
+db.php-old
+index.php-old
+
+# ============================================================
+# UPLOADS - OPTIONAL (Uncomment if you want to exclude uploads)
+# ============================================================
+# wp-content/uploads/
+# Note: Usually you'd exclude uploads to save repo size,
+# but if uploads contain important assets, keep them tracked
+
+# ============================================================
+# WORDPRESS CORE - OPTIONAL (Uncomment to exclude WP core)
+# ============================================================
+# /wp-admin/
+# /wp-includes/
+# /index.php
+# /license.txt
+# /readme.html
+# /wp-*.php
+# /xmlrpc.php
+# Note: If tracking full WP install, comment these out
+# If using Composer/Bedrock structure, uncomment these
+
+# ============================================================
+# PLUGIN & THEME SPECIFIC
+# ============================================================
+# Wordfence
+wp-content/wflogs/
+.user.ini
+wordfence-waf.php
+
+# WP Rocket
+wp-content/wp-rocket-config/
+
+# WP Super Cache
+wp-content/wp-cache-config.php
+
+# ============================================================
+# IDE/EDITOR FILES
+# ============================================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+nbproject/
+*.sublime-project
+*.sublime-workspace
+
+# ============================================================
+# OS GENERATED FILES
+# ============================================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ============================================================
+# DEPENDENCY DIRECTORIES
+# ============================================================
+node_modules/
+vendor/
+bower_components/
+
+# ============================================================
+# BUILD OUTPUT
+# ============================================================
+build/
+dist/
+*.min.js
+*.min.css
+
+# ============================================================
+# MISCELLANEOUS
+# ============================================================
+.htaccess
+# Note: .htaccess may contain sensitive rewrite rules
+# If your .htaccess is generic, you can track it by removing this line
