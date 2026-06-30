@@ -90,7 +90,7 @@
     <div class="sambutan-inner">
       <div class="ketua-photo-wrap fade-in">
         <div class="ketua-photo">
-          <img src="http://webhmjti.test/wp-content/uploads/2026/05/ketuaHMJTI026_backdrop-scaled.png" alt="Ketua HMJTI" class="ketua-img">
+          <img src="<?php echo esc_url(home_url('/wp-content/uploads/2026/05/ketuaHMJTI026_backdrop-scaled.png')); ?>" alt="Ketua HMJTI" class="ketua-img">
           <div class="ketua-info-tag">
             <div class="ketua-name">Suraya Akbar</div>
             <div class="ketua-role">✦ Ketua HMJTI 2025/2026</div>
