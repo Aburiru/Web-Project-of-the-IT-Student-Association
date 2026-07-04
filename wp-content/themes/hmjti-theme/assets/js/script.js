@@ -64,6 +64,10 @@ window.addEventListener('scroll', () => {
   });
 });
 
+scrollTop.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
 // ─── HAMBURGER ───
 const hamburger = document.getElementById('hamburger');
 const mobileNav = document.getElementById('mobile-nav');

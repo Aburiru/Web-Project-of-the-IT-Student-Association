@@ -19,7 +19,7 @@
         <h1 class="hero-title">
           Himpunan<br>
           Mahasiswa<br>
-          <span class="accent-word">Jurusan TI</span>
+          <span class="accent-word">Jurusan-TI</span>
         </h1>
         <p class="hero-desc">
           Organisasi kemahasiswaan yang menjadi wadah pengembangan potensi, kreativitas, dan kolaborasi antar mahasiswa Teknologi Informasi.
