@@ -200,7 +200,7 @@
         <div class="section-label">Struktur Organisasi</div>
         <h2 class="section-title">Tim Pengurus HMJTI<br>2025/2026</h2>
       </div>
-      <a href="#" class="btn btn-outline">Lihat Semua →</a>
+      <!-- <a href="#" class="btn btn-outline">Lihat Semua →</a> -->
     </div>
 
     <div class="pengurus-tabs">
@@ -226,7 +226,7 @@
         <div class="section-label">Berita &amp; Artikel</div>
         <h2 class="section-title">Informasi Terkini</h2>
       </div>
-      <a href="#" class="btn btn-outline">Semua Berita →</a>
+      <a href="<?php echo get_post_type_archive_link('berita'); ?>" class="btn btn-outline">Semua Berita →</a>
     </div>
 
     <div class="news-grid fade-in">

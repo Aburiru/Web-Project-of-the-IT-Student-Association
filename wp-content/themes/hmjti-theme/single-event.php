@@ -80,15 +80,19 @@
 			if ($link):
 			?>
 
-			<a href="<?php echo esc_url($link); ?>" 
-			   class="btn btn-primary"
-			   target="_blank">
+			<div class="event-register-btn-wrap">
 
-			   Daftar Sekarang
+				<a href="<?php echo esc_url($link); ?>"
+				   class="btn btn-primary"
+				   target="_blank">
 
-			</a>
+					Daftar Sekarang
 
-			<?php endif; ?>		
+				</a>
+
+			</div>
+
+			<?php endif; ?>	
 
             <div class="single-event-content">
 
