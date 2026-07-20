@@ -130,18 +130,106 @@ galleryItems.forEach(item => {
 
 });
 
-// ─── RESOURCE DROPDOWN ───
+// ─── EVENT FILTER AJAX ───
+(function() {
+    const filterContainer = document.getElementById('event-filters');
+    const gridContainer = document.getElementById('event-grid');
+    const paginationContainer = document.getElementById('event-pagination');
+    const emptyContainer = document.getElementById('event-empty');
+    
+    if (!filterContainer || !gridContainer) return;
 
-const resourceDropdowns = document.querySelectorAll('.resource-dropdown-item');
+    let currentFilter = 'all';
+    let currentPage = 1;
+    let isLoading = false;
 
-resourceDropdowns.forEach(item => {
+    const filterButtons = filterContainer.querySelectorAll('.filter-btn');
 
-  const btn = item.querySelector('.resource-dropdown-btn');
+    async function fetchEvents(filter, page) {
+        if (isLoading) return;
+        isLoading = true;
+        
+        gridContainer.style.opacity = '0.5';
+        gridContainer.style.pointerEvents = 'none';
 
-  btn.addEventListener('click', () => {
+        try {
+            const formData = new FormData();
+            formData.append('action', 'filter_events');
+            formData.append('filter', filter);
+            formData.append('paged', page);
 
-    item.classList.toggle('active');
+            const response = await fetch(hmjtiAjax.ajaxurl, {
+                method: 'POST',
+                body: formData
+            });
 
-  });
+            const data = await response.json();
 
-});
+            if (data.success) {
+                gridContainer.innerHTML = data.data.html;
+                paginationContainer.innerHTML = data.data.pagination;
+                
+                // Show/hide empty state
+                if (emptyContainer) {
+                    emptyContainer.style.display = data.data.html.includes('archive-event-empty') ? 'block' : 'none';
+                }
+                
+                // Re-observe fade-in elements
+                if (window.observer) {
+                    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+                }
+            } else {
+                console.error('Filter error:', data.data);
+            }
+        } catch (error) {
+            console.error('Fetch error:', error);
+        } finally {
+            isLoading = false;
+            gridContainer.style.opacity = '1';
+            gridContainer.style.pointerEvents = 'auto';
+        }
+    }
+
+    function setActiveButton(btn) {
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+
+    function handlePaginationClick(e) {
+        const link = e.target.closest('.page-numbers');
+        if (!link) return;
+        
+        e.preventDefault();
+        
+        // Extract page number from href
+        const href = link.getAttribute('href');
+        if (!href) return;
+        
+        const url = new URL(href, window.location.origin);
+        const page = parseInt(url.searchParams.get('paged')) || 1;
+        
+        if (page !== currentPage) {
+            currentPage = page;
+            fetchEvents(currentFilter, currentPage);
+            
+            // Scroll to top of grid
+            gridContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+
+    // Filter button clicks
+    filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const filter = btn.dataset.filter;
+            if (filter !== currentFilter) {
+                currentFilter = filter;
+                currentPage = 1;
+                setActiveButton(btn);
+                fetchEvents(currentFilter, currentPage);
+            }
+        });
+    });
+
+    // Pagination clicks (event delegation)
+    paginationContainer.addEventListener('click', handlePaginationClick);
+})();
