@@ -1,26 +1,27 @@
-// ─── DATA PENGURUS ───
-const pengurusData = [
-  { nama: 'Suraya Akbar', jabatan: 'Ketua Himpunan', divisi: 'inti', inisial: 'SA' },
-  { nama: 'Maria Peronika', jabatan: 'Wakil Ketua Himpunan', divisi: 'inti', inisial: 'MP' },
-  { nama: 'Fatimah', jabatan: 'Sekretaris I', divisi: 'inti', inisial: 'F' },
-  { nama: 'Muhammad Fikri Nabilah', jabatan: 'Sekretaris II', divisi: 'inti', inisial: 'MF' },
-  { nama: 'Risna Ariyasari Harahap', jabatan: 'Bendahara', divisi: 'inti', inisial: 'RA' },
-  { nama: 'Rosdayanti', jabatan: 'Koordinator Divisi', divisi: 'humas', inisial: 'R' },
-  { nama: 'Mahdi', jabatan: 'Anggota Humas', divisi: 'humas', inisial: 'M' },
-  { nama: 'Lili Paramita', jabatan: 'Anggota Humas', divisi: 'humas', inisial: 'LP' },
-  { nama: 'Trija Anjelia', jabatan: 'Anggota Humas', divisi: 'humas', inisial: 'TA' },
-  { nama: 'Tiara Zhafirah', jabatan: 'Anggota Humas', divisi: 'humas', inisial: 'TZ' },
-  { nama: 'Muhammad Hanafi', jabatan: 'Anggota Humas', divisi: 'humas', inisial: 'MH' },
-  { nama: 'Muhamamad Zaini Abdul Ghoni', jabatan: 'Anggota Humas', divisi: 'humas', inisial: 'MZ' },
-  { nama: 'Marliana', jabatan: 'Koordinator Divisi', divisi: 'minat dan bakat', inisial: 'M' },
-  { nama: 'Nina Azka Aniqah', jabatan: 'Anggota Minat & Bakat', divisi: 'minat dan bakat', inisial: 'NA' },
-  { nama: 'Muhammad Ramdani Zulfa', jabatan: 'Anggota Minat & Bakat', divisi: 'minat dan bakat', inisial: 'MR' },
-  { nama: 'Soraya Aisyah Yusda', jabatan: 'Anggota Minat & Bakat', divisi: 'minat dan bakat', inisial: 'SY' },
-  // { nama: 'Mega Lestari', jabatan: 'Ketua Divisi', divisi: 'sosial', inisial: 'ML' },
-  // { nama: 'Arif Rahman', jabatan: 'Koordinator', divisi: 'sosial', inisial: 'AR' },
-  // { nama: 'Yuni Kartika', jabatan: 'Ketua Divisi', divisi: 'kewirausahaan', inisial: 'YK' },
-  // { nama: 'Bagas Surya', jabatan: 'Anggota', divisi: 'kewirausahaan', inisial: 'BA' },
+// ─── DATA PENGURUS (from ACF via PHP localization) ───
+// Fallback to hardcoded data if localization fails
+const defaultPengurusData = [
+    { nama: 'Suraya Akbar', jabatan: 'Ketua Himpunan', divisi: 'inti', inisial: 'SA' },
+    { nama: 'Maria Peronika', jabatan: 'Wakil Ketua Himpunan', divisi: 'inti', inisial: 'MP' },
+    { nama: 'Fatimah', jabatan: 'Sekretaris I', divisi: 'inti', inisial: 'F' },
+    { nama: 'Muhammad Fikri Nabilah', jabatan: 'Sekretaris II', divisi: 'inti', inisial: 'MF' },
+    { nama: 'Risna Ariyasari Harahap', jabatan: 'Bendahara', divisi: 'inti', inisial: 'RA' },
+    { nama: 'Rosdayanti', jabatan: 'Koordinator Divisi', divisi: 'humas', inisial: 'R' },
+    { nama: 'Mahdi', jabatan: 'Anggota Humas', divisi: 'humas', inisial: 'M' },
+    { nama: 'Lili Paramita', jabatan: 'Anggota Humas', divisi: 'humas', inisial: 'LP' },
+    { nama: 'Trija Anjelia', jabatan: 'Anggota Humas', divisi: 'humas', inisial: 'TA' },
+    { nama: 'Tiara Zhafirah', jabatan: 'Anggota Humas', divisi: 'humas', inisial: 'TZ' },
+    { nama: 'Muhammad Hanafi', jabatan: 'Anggota Humas', divisi: 'humas', inisial: 'MH' },
+    { nama: 'Muhamamad Zaini Abdul Ghoni', jabatan: 'Anggota Humas', divisi: 'humas', inisial: 'MZ' },
+    { nama: 'Marliana', jabatan: 'Koordinator Divisi', divisi: 'minat dan bakat', inisial: 'M' },
+    { nama: 'Nina Azka Aniqah', jabatan: 'Anggota Minat & Bakat', divisi: 'minat dan bakat', inisial: 'NA' },
+    { nama: 'Muhammad Ramdani Zulfa', jabatan: 'Anggota Minat & Bakat', divisi: 'minat dan bakat', inisial: 'MR' },
+    { nama: 'Soraya Aisyah Yusda', jabatan: 'Anggota Minat & Bakat', divisi: 'minat dan bakat', inisial: 'SY' },
 ];
+
+const pengurusData = Array.isArray(window.pengurusData)
+    ? window.pengurusData
+    : (window.pengurusData && window.pengurusData.people ? window.pengurusData.people : defaultPengurusData);
 
 function filterPengurus(div, el) {
   document.querySelectorAll('.ptab').forEach(t => t.classList.remove('active'));
@@ -31,6 +32,7 @@ function filterPengurus(div, el) {
 
 function renderPengurus(data) {
   const grid = document.getElementById('pengurus-grid');
+  if (!grid) return;
   grid.innerHTML = data.map(p => `
     <div class="pengurus-card">
       <div class="pengurus-avatar">${p.inisial}</div>
@@ -41,7 +43,9 @@ function renderPengurus(data) {
   `).join('');
 }
 
-renderPengurus(pengurusData);
+if (document.getElementById('pengurus-grid')) {
+  renderPengurus(pengurusData);
+}
 
 // ─── HEADER SCROLL ───
 const header = document.getElementById('main-header');

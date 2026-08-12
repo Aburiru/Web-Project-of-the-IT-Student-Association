@@ -26,14 +26,10 @@ function hmjti_theme_scripts() {
 
     // Localize histori data from CPT/ACF
     $histori_periods = array();
-    $posts = get_posts(array(
-        'post_type' => 'tim_pengurus',
-        'posts_per_page' => -1,
-        'post_status' => 'publish',
-        'meta_key' => 'angkatan',
-        'orderby' => 'meta_value',
-        'order' => 'DESC'
-    ));
+    $histori_tabs_config = array(
+        array('key' => 'semua', 'label' => 'Semua'),
+    );
+    $histori_group_meta = array();
 
     // Helper: normalize divisi label to key
     function hmjti_normalize_divisi($label) {
@@ -47,28 +43,88 @@ function hmjti_theme_scripts() {
             'minat' => 'minat',
             'minat & bakat' => 'minat',
         );
-        return $map[$label] ?? 'inti';
+        return $map[$label] ?? 'default'; // Use 'default' key for unknown categories
     }
 
-    // Helper: get badge label from key
-    function hmjti_divisi_label($key) {
+    // Helper: get badge label from key (or original label if not found)
+    function hmjti_divisi_label($key, $original_label = '') {
         $labels = array(
             'inti' => 'Inti',
             'humas' => 'Humas',
             'minat' => 'Minat dan Bakat',
+            'default' => $original_label ?: 'Lain-lain', // Fallback for unknown
         );
-        return $labels[$key] ?? ucfirst($key);
+        return $labels[$key] ?? $original_label;
     }
 
-    // Helper: get badge color from key (for CSS class)
+    // Helper: get badge color from key
     function hmjti_divisi_color($key) {
         $colors = array(
             'inti' => '#6B1010',      // maroon
             'humas' => '#c65a24',     // orange-brown
             'minat' => '#0f6e56',     // teal
+            'default' => '#8a9ab2',   // gray for unknown
         );
-        return $colors[$key] ?? '#6B1010';
+        return $colors[$key] ?? '#8a9ab2';
     }
+
+    // Define default group meta for standard categories
+    $default_group_meta = array(
+        'inti' =>  array('name' => 'Pimpinan', 'dot' => '#6B1010'),
+        'humas' => array('name' => 'Divisi Humas', 'dot' => '#c65a24'),
+        'minat' => array('name' => 'Divisi Minat dan Bakat', 'dot' => '#0f6e56'),
+    );
+    $histori_group_meta = $default_group_meta; // Start with defaults
+
+    // Fetch all unique categories from tim_pengurus posts
+    $all_categories_raw = array();
+    $posts_for_categories = get_posts(array(
+        'post_type' => 'tim_pengurus',
+        'posts_per_page' => -1,
+        'post_status' => 'publish',
+    ));
+
+    $posts = $posts_for_categories; // Reuse the query
+
+    foreach ($posts_for_categories as $post_cat) {
+        $kategori_raw = get_field('kategori', $post_cat->ID);
+        if ($kategori_raw && !in_array($kategori_raw, $all_categories_raw)) {
+            $all_categories_raw[] = $kategori_raw;
+        }
+    }
+
+    // Dynamically build tabs and group meta based on existing categories
+    foreach ($all_categories_raw as $cat_raw) {
+        $cat_key = hmjti_normalize_divisi($cat_raw);
+        $cat_label = hmjti_divisi_label($cat_key, $cat_raw); // Use original label if key is 'default'
+
+        // Add to tabs config if not 'semua' and not already added
+        $found_in_tabs = false;
+        foreach ($histori_tabs_config as $tab) {
+            if ($tab['key'] === $cat_key) {
+                $found_in_tabs = true;
+                break;
+            }
+        }
+        if (!$found_in_tabs && $cat_key !== 'default') { // Don't add 'default' as a tab
+             $histori_tabs_config[] = array('key' => $cat_key, 'label' => $cat_label);
+        }
+
+        // Add to group meta if not already defined (or if it's a new 'default' category)
+        if (!isset($histori_group_meta[$cat_key])) {
+            $histori_group_meta[$cat_key] = array(
+                'name' => $cat_label,
+                'dot' => hmjti_divisi_color($cat_key)
+            );
+        }
+    }
+    // Sort tabs alphabetically, keeping 'semua' first
+    usort($histori_tabs_config, function($a, $b) {
+        if ($a['key'] === 'semua') return -1;
+        if ($b['key'] === 'semua') return 1;
+        return strcmp($a['label'], $b['label']);
+    });
+
 
     foreach ($posts as $post) {
         $angkatan = get_field('angkatan', $post->ID);
@@ -77,7 +133,7 @@ function hmjti_theme_scripts() {
         if (!$angkatan) $angkatan = '2025/2026';
         if (!$kategori_raw) $kategori_raw = 'Inti';
 
-        // Normalize to key: inti/humas/minat
+        // Normalize to key: inti/humas/minat/default
         $kategori_key = hmjti_normalize_divisi($kategori_raw);
 
         $period_key = $angkatan;
@@ -89,7 +145,9 @@ function hmjti_theme_scripts() {
         $name_parts = explode(' ', get_the_title($post->ID));
         $initials = '';
         foreach ($name_parts as $part) {
-            $initials .= strtoupper($part[0]);
+            if(!empty($part)) {
+                $initials .= strtoupper($part[0]);
+            }
         }
         $initials = substr($initials, 0, 2);
 
@@ -98,8 +156,8 @@ function hmjti_theme_scripts() {
             'initials' => $initials,
             'nama' => get_the_title($post->ID),
             'jabatan' => get_field('jabatan', $post->ID),
-            'badgeLabel' => hmjti_divisi_label($kategori_key),
-            'badgeColor' => hmjti_divisi_color($kategori_key), // for dynamic CSS if needed
+            'badgeLabel' => hmjti_divisi_label($kategori_key, $kategori_raw),
+            'badgeColor' => hmjti_divisi_color($kategori_key),
             'nim' => get_field('nim', $post->ID),
             'angkatan' => get_field('angkatan_raw', $post->ID) ?: get_field('angkatan', $post->ID),
             'masaJabatan' => get_field('jangka_jabatan', $post->ID),
@@ -108,8 +166,25 @@ function hmjti_theme_scripts() {
         );
     }
 
+    // Sort periods keys from newest to oldest
+    krsort($histori_periods);
+
     wp_localize_script('hmjti-histori-script', 'historiData', array(
-        'periods' => $histori_periods
+        'periods' => $histori_periods,
+        'tabsConfig' => $histori_tabs_config,
+        'groupMeta' => $histori_group_meta,
+    ));
+
+    // Also localize for front-page kepengurusan section
+    // Get current period (newest)
+    $current_period_key = array_key_first($histori_periods);
+    $current_period_data = $histori_periods[$current_period_key] ?? array();
+
+    wp_localize_script('hmjti-custom-script', 'pengurusData', array(
+        'currentPeriod' => $current_period_key,
+        'people' => $current_period_data,
+        'tabsConfig' => $histori_tabs_config,
+        'groupMeta' => $histori_group_meta,
     ));
 }
 add_action('wp_enqueue_scripts', 'hmjti_theme_scripts');
@@ -118,7 +193,7 @@ function hmjti_theme_setup() {
     // Add theme support
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
-    
+
     // Register Menu
     register_nav_menus(array(
         'primary-menu' => __('Primary Menu', 'hmjti'),
@@ -176,7 +251,7 @@ function hmjti_filter_events_ajax() {
     }
 
     $event_query = new WP_Query($args);
-    
+
     ob_start();
 
     if ($event_query->have_posts()) :
@@ -186,7 +261,7 @@ function hmjti_filter_events_ajax() {
             $waktu = get_field('waktu_event');
             $badge = '';
             $badge_class = '';
-            
+
             if ($tanggal) {
                 if ($tanggal > $today) {
                     $badge = 'Akan Datang';
@@ -252,9 +327,9 @@ function hmjti_filter_events_ajax() {
         </div>
         <?php
     endif;
-    
+
     $html = ob_get_clean();
-    
+
     // Generate Pagination
     ob_start();
     if ($event_query->max_num_pages > 1) {
@@ -269,7 +344,7 @@ function hmjti_filter_events_ajax() {
         ));
     }
     $pagination = ob_get_clean();
-    
+
     wp_reset_postdata();
 
     wp_send_json_success(array(

@@ -200,7 +200,7 @@
         <div class="section-label">Struktur Organisasi</div>
         <h2 class="section-title">Tim Pengurus HMJTI<br>2025/2026</h2>
       </div>
-      <!-- <a href="#" class="btn btn-outline">Lihat Semua →</a> -->
+      <a href="<?php echo esc_url(get_post_type_archive_link('tim_pengurus')); ?>" class="btn btn-outline">Lihat Histori →</a>
     </div>
 
     <div class="pengurus-tabs">

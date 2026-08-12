@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Histori Tim Pengurus - HMJTI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --maroon: #7a1620;
+    --maroon-dark: #4a0d15;
+    --maroon-light: #a8283a;
+    --navy: #1d2340;
+    --bg: #f5f5f7;
+    --surface: #ffffff;
+    --border: #e6e5e8;
+    --border-strong: #d7d5da;
+    --text-primary: #201d1f;
+    --text-secondary: #6c696d;
+    --text-muted: #a09da1;
+    --font-display: 'Baloo 2', sans-serif;
+    --font-body: 'Inter', -apple-system, sans-serif;
+  }
+
+  *{ box-sizing:border-box; }
+
+  body{
+    margin:0;
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height:1.55;
+  }
+
+  /* Hero */
+  .hero{
+    background: linear-gradient(160deg, var(--maroon) 0%, var(--maroon-dark) 100%);
+    padding: 64px 24px 56px;
+    color:#fff;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute; top:-60px; right:-60px;
+    width:280px; height:280px; border-radius:50%;
+    background: rgba(255,255,255,.05);
+  }
+  .hero-inner{
+    max-width: 1080px;
+    margin: 0 auto;
+    position:relative;
+  }
+  .eyebrow{
+    display:flex; align-items:center; gap:8px;
+    font-size: 12px;
+    font-weight:700;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color: #f3b9be;
+    margin-bottom: 14px;
+  }
+  .eyebrow::before{
+    content:""; width:22px; height:2px; background: #f3b9be; display:inline-block;
+  }
+  .hero h1{
+    font-family: var(--font-display);
+    font-weight:700;
+    font-size: 44px;
+    line-height:1.1;
+    margin: 0 0 14px;
+  }
+  .hero p{
+    margin:0;
+    font-size: 15px;
+    color: rgba(255,255,255,.8);
+    max-width: 520px;
+  }
+
+  /* Page body */
+  .page{
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 40px 24px 88px;
+  }
+
+  .toolbar{
+    display:flex; justify-content:space-between; align-items:center;
+    flex-wrap:wrap; gap:16px;
+    margin-bottom: 28px;
+  }
+  .toolbar h2{
+    font-family: var(--font-display);
+    font-weight:700;
+    font-size: 22px;
+    color: var(--maroon);
+    margin:0;
+  }
+
+  .period-select{
+    display:flex; align-items:center; gap:10px;
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    padding: 8px 8px 8px 18px;
+  }
+  .period-select label{
+    font-size: 12px; font-weight:600; color: var(--text-secondary);
+    white-space:nowrap;
+  }
+  .period-select select{
+    border:none; background:none;
+    font-family: var(--font-body);
+    font-size: 13.5px; font-weight:700;
+    color: var(--maroon);
+    padding: 6px 30px 6px 6px;
+    cursor:pointer;
+    appearance:none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%237a1620' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position: right 6px center;
+  }
+
+  /* Tabs */
+  .tabs{
+    display:flex; gap: 4px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 28px;
+    overflow-x:auto;
+  }
+  .tab{
+    background:none; border:none;
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    padding: 10px 16px 12px;
+    cursor:pointer;
+    white-space:nowrap;
+    border-bottom: 2px solid transparent;
+    margin-bottom:-1px;
+    transition: color .15s ease;
+  }
+  .tab:hover{ color: var(--text-primary); }
+  .tab.active{
+    color: var(--maroon);
+    border-bottom-color: var(--maroon);
+  }
+
+  .group-header{
+    display:flex; align-items:center; gap:10px;
+    margin: 32px 0 14px;
+  }
+  .group-header:first-child{ margin-top:0; }
+  .group-dot{ width:8px; height:8px; border-radius:50%; flex:none; }
+  .group-name{ font-size: 13px; font-weight:700; color: var(--text-primary); }
+  .group-count{ font-size: 12px; color: var(--text-muted); }
+
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 14px;
+  }
+
+  .card{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 22px 16px 18px;
+    display:flex; flex-direction:column; align-items:center; text-align:center;
+    cursor:pointer;
+    font: inherit;
+    color:inherit;
+    transition: border-color .15s ease, box-shadow .15s ease, transform .12s ease;
+  }
+  .card:hover{
+    border-color: var(--maroon-light);
+    box-shadow: 0 6px 18px rgba(122,22,32,.08);
+    transform: translateY(-2px);
+  }
+  .card:focus-visible{
+    outline: 2px solid var(--maroon);
+    outline-offset: 2px;
+  }
+
+  .avatar{
+    width: 58px; height:58px; border-radius:50%;
+    background: var(--navy);
+    color: #f0637a;
+    display:flex; align-items:center; justify-content:center;
+    font-family: var(--font-display);
+    font-weight:700;
+    font-size: 17px;
+    margin-bottom: 12px;
+    flex:none;
+  }
+
+  .card-name{ margin:0 0 3px; font-size: 14.5px; font-weight: 700; line-height:1.3; }
+  .card-role{ margin: 0 0 12px; font-size: 12px; color: var(--text-secondary); }
+
+  .badge{
+    display:inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 999px;
+  }
+  .badge.inti{ background: var(--maroon); color:#fce3e6; }
+  .badge.humas{ background:#c65a24; color:#fdece0; }
+  .badge.minat{ background:#0f6e56; color:#dcf4ec; }
+
+  .empty{
+    text-align:center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+
+  /* Overlay + modal */
+  .overlay{
+    display:none;
+    position: fixed; inset:0;
+    background: rgba(30,10,12,.55);
+    align-items:center; justify-content:center;
+    padding: 24px;
+    z-index: 1000;
+  }
+  .overlay.open{ display:flex; }
+
+  .modal{
+    background: var(--surface);
+    border-radius: 20px;
+    max-width: 380px; width:100%;
+    box-shadow: 0 24px 60px rgba(0,0,0,.28);
+    overflow:hidden;
+    animation: pop .16s ease;
+  }
+  @keyframes pop{
+    from{ opacity:0; transform: translateY(8px) scale(.97); }
+    to{ opacity:1; transform: translateY(0) scale(1); }
+  }
+
+  .modal-banner{
+    background: linear-gradient(135deg, var(--maroon) 0%, var(--maroon-dark) 100%);
+    padding: 26px 24px 20px;
+    position:relative;
+    color:#fff;
+  }
+  .close-btn{
+    position:absolute; top:14px; right:14px;
+    width: 30px; height:30px; border-radius:50%;
+    border: none;
+    background: rgba(255,255,255,.15);
+    color:#fff;
+    cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    font-size: 15px;
+    line-height:1;
+  }
+  .close-btn:hover{ background: rgba(255,255,255,.28); }
+
+  .modal-person{ display:flex; gap:14px; align-items:center; }
+  .modal-avatar{
+    width:56px; height:56px; border-radius:50%;
+    background: rgba(255,255,255,.14);
+    display:flex; align-items:center; justify-content:center;
+    font-family: var(--font-display);
+    font-weight:700; font-size:18px;
+    flex:none;
+  }
+  .modal-name{ margin:0 0 4px; font-family: var(--font-display); font-weight:700; font-size:18px; }
+  .modal-role{ margin:0; font-size: 12.5px; color: rgba(255,255,255,.78); }
+
+  .modal-body{
+    padding: 20px 24px 24px;
+    display:flex; flex-direction:column; gap:14px;
+  }
+  .modal-row{
+    display:flex; justify-content:space-between; align-items:flex-start;
+    font-size: 13.5px; gap:16px;
+  }
+  .modal-row .label{
+    color: var(--text-secondary);
+    display:flex; align-items:center; gap:8px;
+    flex:none; white-space:nowrap;
+    font-weight:500;
+  }
+  .modal-row .value{ text-align:right; font-weight:600; word-break:break-word; }
+  .modal-row .value.link{ color: var(--maroon); }
+
+  .icon-dot{
+    width:26px; height:26px; border-radius:8px;
+    background: #fbeeea;
+    color: var(--maroon);
+    display:flex; align-items:center; justify-content:center;
+    font-size:13px;
+    flex:none;
+  }
+
+  @media (max-width: 480px){
+    .hero{ padding: 44px 20px 40px; }
+    .hero h1{ font-size: 30px; }
+    .toolbar{ flex-direction:column; align-items:flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Arsip organisasi</div>
+    <h1>Histori tim pengurus</h1>
+    <p>Daftar lengkap kepengurusan Himpunan Mahasiswa Jurusan Teknologi Informasi dari masa ke masa.</p>
+  </div>
+</div>
+
+<div class="page">
+
+  <div class="toolbar">
+    <h2 id="periodTitle">Periode 2025/2026</h2>
+    <div class="period-select">
+      <label for="periodPicker">Pilih periode</label>
+      <select id="periodPicker"></select>
+    </div>
+  </div>
+
+  <div class="tabs" id="tabs"></div>
+
+  <div id="cardsWrap"></div>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="modal" id="modal"></div>
+</div>
+
+<script>
+// ------------------------------------------------------------------
+// DATA HISTORI PENGURUS — kelompokkan per periode.
+// Tambah objek periode baru untuk memperluas arsip.
+// kategori: "inti" | "humas" | "minat" (silakan sesuaikan/tambah divisi)
+// ------------------------------------------------------------------
+const periods = {
+  "2025/2026": [
+    { kategori:"inti", initials:"SA", nama:"Suraya Akbar", jabatan:"Ketua Himpunan", badgeLabel:"Inti", nim:"2210110001", angkatan:"2022", masaJabatan:"2025 - 2026", email:"suraya.akbar@student.ac.id" },
+    { kategori:"inti", initials:"MP", nama:"Maria Peronika", jabatan:"Wakil Ketua Himpunan", badgeLabel:"Inti", nim:"2210110014", angkatan:"2022", masaJabatan:"2025 - 2026", email:"maria.peronika@student.ac.id" },
+    { kategori:"inti", initials:"F",  nama:"Fatimah", jabatan:"Sekretaris I", badgeLabel:"Inti", nim:"2310110022", angkatan:"2023", masaJabatan:"2025 - 2026", email:"fatimah@student.ac.id" },
+    { kategori:"inti", initials:"MF", nama:"Muhammad Fikri Nabilah", jabatan:"Sekretaris II", badgeLabel:"Inti", nim:"2310110030", angkatan:"2023", masaJabatan:"2025 - 2026", email:"m.fikri.nabilah@student.ac.id" },
+    { kategori:"inti", initials:"RA", nama:"Risna Ariyasari Harahap", jabatan:"Bendahara", badgeLabel:"Inti", nim:"2310110045", angkatan:"2023", masaJabatan:"2025 - 2026", email:"risna.ariyasari@student.ac.id" },
+
+    { kategori:"humas", initials:"R",  nama:"Rosdayanti", jabatan:"Koordinator Divisi", badgeLabel:"Humas", nim:"2310110051", angkatan:"2023", masaJabatan:"2025 - 2026", email:"rosdayanti@student.ac.id" },
+    { kategori:"humas", initials:"M",  nama:"Mahdi", jabatan:"Anggota Humas", badgeLabel:"Humas", nim:"2410110002", angkatan:"2024", masaJabatan:"2025 - 2026", email:"mahdi@student.ac.id" },
+    { kategori:"humas", initials:"LP", nama:"Lili Paramita", jabatan:"Anggota Humas", badgeLabel:"Humas", nim:"2410110009", angkatan:"2024", masaJabatan:"2025 - 2026", email:"lili.paramita@student.ac.id" },
+    { kategori:"humas", initials:"TA", nama:"Trija Anjelia", jabatan:"Anggota Humas", badgeLabel:"Humas", nim:"2410110013", angkatan:"2024", masaJabatan:"2025 - 2026", email:"trija.anjelia@student.ac.id" },
+    { kategori:"humas", initials:"TZ", nama:"Tiara Zhafirah", jabatan:"Anggota Humas", badgeLabel:"Humas", nim:"2410110018", angkatan:"2024", masaJabatan:"2025 - 2026", email:"tiara.zhafirah@student.ac.id" },
+    { kategori:"humas", initials:"MH", nama:"Muhammad Hanafi", jabatan:"Anggota Humas", badgeLabel:"Humas", nim:"2410110021", angkatan:"2024", masaJabatan:"2025 - 2026", email:"m.hanafi@student.ac.id" },
+    { kategori:"humas", initials:"MZ", nama:"Muhamamad Zaini Abdul Ghoni", jabatan:"Anggota Humas", badgeLabel:"Humas", nim:"2410110027", angkatan:"2024", masaJabatan:"2025 - 2026", email:"m.zaini.ag@student.ac.id" },
+
+    { kategori:"minat", initials:"M",  nama:"Marliana", jabatan:"Koordinator Divisi", badgeLabel:"Minat dan bakat", nim:"2310110060", angkatan:"2023", masaJabatan:"2025 - 2026", email:"marliana@student.ac.id" },
+    { kategori:"minat", initials:"NA", nama:"Nina Azka Aniqah", jabatan:"Anggota Minat dan Bakat", badgeLabel:"Minat dan bakat", nim:"2410110033", angkatan:"2024", masaJabatan:"2025 - 2026", email:"nina.azka@student.ac.id" },
+    { kategori:"minat", initials:"MR", nama:"Muhammad Ramdani Zulfa", jabatan:"Anggota Minat dan Bakat", badgeLabel:"Minat dan bakat", nim:"2410110038", angkatan:"2024", masaJabatan:"2025 - 2026", email:"m.ramdani.zulfa@student.ac.id" },
+    { kategori:"minat", initials:"SA", nama:"Soraya Aisyah Yusda", jabatan:"Anggota Minat dan Bakat", badgeLabel:"Minat dan bakat", nim:"2410110041", angkatan:"2024", masaJabatan:"2025 - 2026", email:"soraya.aisyah@student.ac.id" }
+  ]
+  // "2024/2025": [ ... tambahkan periode lain di sini ... ]
+};
+
+const tabsConfig = [
+  { key:"semua", label:"Semua" },
+  { key:"inti",  label:"Pengurus Inti" },
+  { key:"humas", label:"Divisi Humas" },
+  { key:"minat", label:"Divisi Minat dan Bakat" }
+];
+
+const groupMeta = {
+  inti:  { name:"Pimpinan",             dot:"#7a1620" },
+  humas: { name:"Divisi Humas",         dot:"#c65a24" },
+  minat: { name:"Divisi Minat dan Bakat", dot:"#0f6e56" }
+};
+
+const periodPicker = document.getElementById('periodPicker');
+const periodTitle = document.getElementById('periodTitle');
+const tabsWrap = document.getElementById('tabs');
+const cardsWrap = document.getElementById('cardsWrap');
+const overlay = document.getElementById('overlay');
+const modal = document.getElementById('modal');
+
+let activePeriod = Object.keys(periods)[0];
+let activeTab = "semua";
+
+Object.keys(periods).forEach(key => {
+  const opt = document.createElement('option');
+  opt.value = key;
+  opt.textContent = "Periode " + key;
+  periodPicker.appendChild(opt);
+});
+periodPicker.value = activePeriod;
+periodPicker.addEventListener('change', () => {
+  activePeriod = periodPicker.value;
+  periodTitle.textContent = "Periode " + activePeriod;
+  render();
+});
+
+function renderTabs(){
+  tabsWrap.innerHTML = "";
+  tabsConfig.forEach(t => {
+    const btn = document.createElement('button');
+    btn.className = 'tab' + (t.key === activeTab ? ' active' : '');
+    btn.type = 'button';
+    btn.textContent = t.label;
+    btn.addEventListener('click', () => {
+      activeTab = t.key;
+      renderTabs();
+      renderCards();
+    });
+    tabsWrap.appendChild(btn);
+  });
+}
+
+function renderCards(){
+  cardsWrap.innerHTML = "";
+  const people = periods[activePeriod] || [];
+
+  if(!people.length){
+    cardsWrap.innerHTML = '<div class="empty">Belum ada data pengurus untuk periode ini.</div>';
+    return;
+  }
+
+  if(activeTab !== "semua"){
+    appendGroup(activeTab, people.filter(p => p.kategori === activeTab));
+    return;
+  }
+
+  Object.keys(groupMeta).forEach(key => {
+    const list = people.filter(p => p.kategori === key);
+    if(list.length) appendGroup(key, list);
+  });
+}
+
+function appendGroup(key, list){
+  const meta = groupMeta[key];
+  const header = document.createElement('div');
+  header.className = 'group-header';
+  header.innerHTML = `
+    <span class="group-dot" style="background:${meta.dot}"></span>
+    <span class="group-name">${meta.name}</span>
+    <span class="group-count">${list.length} orang</span>
+  `;
+  cardsWrap.appendChild(header);
+
+  const grid = document.createElement('div');
+  grid.className = 'grid';
+  list.forEach(person => {
+    const card = document.createElement('button');
+    card.className = 'card';
+    card.type = 'button';
+    card.setAttribute('aria-label', `Lihat detail ${person.nama}`);
+    card.innerHTML = `
+      <div class="avatar">${person.initials}</div>
+      <p class="card-name">${person.nama}</p>
+      <p class="card-role">${person.jabatan}</p>
+      <span class="badge ${person.kategori}">${person.badgeLabel}</span>
+    `;
+    card.addEventListener('click', () => openModal(person));
+    grid.appendChild(card);
+  });
+  cardsWrap.appendChild(grid);
+}
+
+function closeModal(){ overlay.classList.remove('open'); }
+overlay.addEventListener('click', e => { if(e.target === overlay) closeModal(); });
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+
+function openModal(p){
+  modal.innerHTML = `
+    <div class="modal-banner">
+      <button class="close-btn" aria-label="Tutup" id="closeBtn">&#10005;</button>
+      <div class="modal-person">
+        <div class="modal-avatar">${p.initials}</div>
+        <div>
+          <p class="modal-name">${p.nama}</p>
+          <p class="modal-role">${p.jabatan}</p>
+        </div>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-row">
+        <span class="label"><span class="icon-dot">#</span>NIM</span>
+        <span class="value">${p.nim}</span>
+      </div>
+      <div class="modal-row">
+        <span class="label"><span class="icon-dot">Y</span>Tahun angkatan</span>
+        <span class="value">${p.angkatan}</span>
+      </div>
+      <div class="modal-row">
+        <span class="label"><span class="icon-dot">J</span>Masa jabatan</span>
+        <span class="value">${p.masaJabatan}</span>
+      </div>
+      <div class="modal-row">
+        <span class="label"><span class="icon-dot">@</span>Email</span>
+        <span class="value link">${p.email}</span>
+      </div>
+    </div>
+  `;
+  overlay.classList.add('open');
+  document.getElementById('closeBtn').addEventListener('click', closeModal);
+}
+
+function render(){ renderTabs(); renderCards(); }
+render();
+</script>
+
+</body>
+</html>

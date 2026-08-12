@@ -42,6 +42,8 @@ wp-content/upgrade/
 .tmb/
 *.tmp
 PRD.md
+AGENTS.md
+session.txt
 
 # ============================================================
 # LOGS - MAY CONTAIN SENSITIVE INFORMATION
