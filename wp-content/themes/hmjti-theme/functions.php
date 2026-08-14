@@ -41,13 +41,15 @@ function hmjti_theme_scripts() {
         $map = array(
             'inti' => 'inti',
             'pengurus inti' => 'inti',
+            'divisi inti' => 'inti', // Added for clarity
             'humas' => 'humas',
             'divisi humas' => 'humas',
             'minat dan bakat' => 'minat',
             'minat' => 'minat',
+            'divisi minat dan bakat' => 'minat', // Added for clarity
             'minat & bakat' => 'minat',
         );
-        return $map[$label] ?? 'inti';
+        return $map[$label] ?? 'inti'; // Default to 'inti' if no match
     }
 
     // Helper: get badge label from key
@@ -72,7 +74,14 @@ function hmjti_theme_scripts() {
 
     foreach ($posts as $post) {
         $angkatan = get_field('angkatan', $post->ID);
-        $kategori_raw = get_field('kategori', $post->ID);
+        $kategori_raw = get_field('divisi_pengurus', $post->ID);
+
+        if (!$kategori_raw) {
+            $kategori_raw = get_field('kategori', $post->ID);
+        }
+        if (!$kategori_raw) {
+            $kategori_raw = get_field('divisi', $post->ID);
+        }
 
         if (!$angkatan) $angkatan = '2025/2026';
         if (!$kategori_raw) $kategori_raw = 'Inti';
