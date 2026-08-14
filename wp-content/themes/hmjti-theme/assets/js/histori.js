@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Generate initials from name
             const initials = person.nama.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
             // Use dynamic badge color from PHP if available
-            const badgeStyle = person.badgeColor ? `style="background:${person.badgeColor};color:#fff;"` : `class="histori-badge ${person.kategori}"`;
+            const badgeStyle = `class="histori-badge ${person.kategori}"${person.badgeColor ? ` style="background:${person.badgeColor};color:#fff;"` : ''}`;
             card.innerHTML = `
                 <div class="histori-avatar">${person.initials || initials}</div>
                 <p class="histori-card-name">${person.nama}</p>
