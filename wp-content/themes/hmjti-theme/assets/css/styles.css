@@ -2986,7 +2986,7 @@
 
   /* ─── ARCHIVE EVENT PAGE ─── */
   .archive-event-hero {
-    background: linear-gradient(135deg, var(--navy-900) 0%, var(--navy-800) 100%);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent2) 100%);
     padding: 80px 0 60px;
     position: relative;
     overflow: hidden;
@@ -3039,9 +3039,9 @@
   }
   .filter-btn {
     padding: 10px 20px;
-    border: 2px solid var(--navy-200);
+    border: 2px solid var(--border);
     background: var(--white);
-    color: var(--navy-600);
+    color: var(--text2);
     border-radius: 50px;
     font-size: 14px;
     font-weight: 600;
@@ -3051,17 +3051,17 @@
     white-space: nowrap;
   }
   .filter-btn:hover {
-    border-color: var(--navy-400);
-    color: var(--navy-800);
+    border-color: var(--accent);
+    color: var(--accent);
   }
   .filter-btn.active {
-    background: var(--navy-900);
-    border-color: var(--navy-900);
+    background: var(--primary);
+    border-color: var(--primary);
     color: var(--white);
   }
   .filter-btn.active:hover {
-    background: var(--navy-800);
-    border-color: var(--navy-800);
+    background: var(--accent);
+    border-color: var(--accent);
   }
 
   .archive-event-grid {
@@ -3083,14 +3083,14 @@
     display: flex;
     gap: 16px;
     padding: 20px;
-    background: var(--navy-50);
+    background: linear-gradient(135deg, var(--primary), var(--accent));
     border-radius: 16px 16px 0 0;
   }
   .archive-event-card .event-date-box {
     flex-shrink: 0;
     width: 64px;
     height: 64px;
-    background: var(--navy-900);
+    background: var(--accent);
     border-radius: 12px;
     display: flex;
     flex-direction: column;
@@ -3103,13 +3103,15 @@
     font-weight: 800;
     font-family: 'Syne', sans-serif;
     line-height: 1;
+    color: var(--primary);
   }
   .archive-event-card .event-date-box .month {
     font-size: 12px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    opacity: 0.9;
+    color: var(--primary);
+    opacity: 0.8;
   }
   .archive-event-card .event-info {
     flex: 1;
@@ -3130,7 +3132,7 @@
   }
   .archive-event-card .event-type.badge-upcoming {
     background: rgba(34, 197, 94, 0.15);
-    color: var(--success);
+    color: var(--gold);
   }
   .archive-event-card .event-type.badge-today {
     background: rgba(59, 130, 246, 0.15);
@@ -3143,7 +3145,7 @@
   .archive-event-card .event-title-card {
     font-size: 18px;
     font-weight: 700;
-    color: var(--navy-900);
+    color: var(--white);
     line-height: 1.3;
     font-family: 'Syne', sans-serif;
   }
@@ -3160,7 +3162,7 @@
     gap: 10px;
     margin-bottom: 12px;
     font-size: 14px;
-    color: var(--navy-600);
+    color: var(--text2);
     line-height: 1.5;
   }
   .archive-event-card .event-detail:last-of-type {
@@ -3171,7 +3173,7 @@
     width: 20px;
     height: 20px;
     margin-top: 2px;
-    color: var(--navy-400);
+    color: var(--text3);
   }
   .archive-event-card .btn {
     margin-top: auto;
@@ -3191,17 +3193,17 @@
     justify-content: center;
     width: 44px;
     height: 44px;
-    border: 2px solid var(--navy-200);
+    border: 2px solid var(--border);
+    color: var(--text2);
     border-radius: 12px;
-    color: var(--navy-600);
     font-weight: 600;
     text-decoration: none;
     transition: all 0.2s ease;
   }
   .archive-event-pagination .page-numbers:hover,
   .archive-event-pagination .page-numbers.current {
-    background: var(--navy-900);
-    border-color: var(--navy-900);
+    background: var(--primary);
+    border-color: var(--primary);
     color: var(--white);
   }
   .archive-event-pagination .page-numbers ion-icon {
@@ -3211,24 +3213,24 @@
   .archive-event-empty {
     text-align: center;
     padding: 80px 20px;
-    color: var(--navy-500);
+    color: var(--text2);
   }
   .archive-event-empty ion-icon {
     font-size: 64px;
     margin-bottom: 16px;
     display: block;
-    color: var(--navy-300);
+    color: var(--text3);
   }
   .archive-event-empty h3 {
     font-size: 24px;
     font-weight: 700;
-    color: var(--navy-800);
+    color: var(--primary);
     margin-bottom: 8px;
     font-family: 'Syne', sans-serif;
   }
   .archive-event-empty p {
     font-size: 16px;
-    color: var(--navy-500);
+    color: var(--text2);
   }
 
   /* Responsive for Archive Event */

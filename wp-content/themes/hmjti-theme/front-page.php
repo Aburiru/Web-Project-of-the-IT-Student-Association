@@ -355,7 +355,7 @@
         <div class="section-label">Event &amp; Kegiatan</div>
         <h2 class="section-title">Agenda Mendatang</h2>
       </div>
-      <a href="#" class="btn btn-outline">Semua Event →</a>
+      <a href="<?php echo esc_url(get_post_type_archive_link('event')); ?>" class="btn btn-outline">Semua Event →</a>
     </div>
 
     <div class="event-grid">

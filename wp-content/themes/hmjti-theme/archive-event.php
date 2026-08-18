@@ -72,7 +72,7 @@ get_header();
               }
             }
         ?>
-            <div class="event-card archive-event-card fade-in" data-event-date="<?php echo esc_attr($tanggal); ?>">
+            <div class="event-card archive-event-card" data-event-date="<?php echo esc_attr($tanggal); ?>">
               <div class="event-card-top">
                 <div class="event-date-box">
                   <?php if ($tanggal): ?>
