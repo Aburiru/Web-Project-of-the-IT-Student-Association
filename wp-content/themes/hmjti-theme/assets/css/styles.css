@@ -796,16 +796,18 @@
     color: var(--text3);
   }
 
-  .pengurus-badge {
+.pengurus-badge {
     display: inline-block;
     margin-top: 10px;
     padding: 3px 10px;
     border-radius: 99px;
     font-size: 11px;
-    background: 10% var(--accent);
     color: var(--white);
     border: 1px solid var(--border);
   }
+  .pengurus-badge.inti { background: #6B1010; }
+  .pengurus-badge.humas { background: #c65a24; }
+  .pengurus-badge.minat { background: #0f6e56; }
 
   /* ─── BERITA ─── */
   #berita {

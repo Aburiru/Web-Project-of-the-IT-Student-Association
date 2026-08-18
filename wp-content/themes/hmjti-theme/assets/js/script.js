@@ -38,7 +38,8 @@ function renderPengurus(data) {
       <div class="pengurus-avatar">${p.inisial}</div>
       <div class="pengurus-name">${p.nama}</div>
       <div class="pengurus-role">${p.jabatan}</div>
-      <span class="pengurus-badge">${p.divisi.charAt(0).toUpperCase() + p.divisi.slice(1)}</span>
+      <span class="pengurus-badge ${p.divisi}">${p.divisi.charAt(0).toUpperCase()
+ + p.divisi.slice(1)}</span>
     </div>
   `).join('');
 }
