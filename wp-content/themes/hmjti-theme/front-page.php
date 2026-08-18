@@ -499,7 +499,7 @@
         <div class="section-label">Dokumentasi</div>
         <h2 class="section-title">Galeri Kegiatan</h2>
       </div>
-      <a href="#" class="btn btn-outline">Lihat Semua →</a>
+      <a href="<?php echo esc_url(get_post_type_archive_link('gallery')); ?>" class="btn btn-outline">Lihat Semua →</a>
     </div>
 
     <div class="gallery-grid fade-in">
