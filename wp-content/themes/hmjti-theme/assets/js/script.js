@@ -179,10 +179,10 @@ galleryItems.forEach(item => {
                     emptyContainer.style.display = data.data.html.includes('archive-event-empty') ? 'block' : 'none';
                 }
                 
-                // Re-observe fade-in elements
-                if (window.observer) {
-                    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-                }
+                // Force visible untuk elemen yang baru disuntikkan via AJAX
+                gridContainer.querySelectorAll('.fade-in').forEach(el => {
+                    el.classList.add('visible');
+                });
             } else {
                 console.error('Filter error:', data.data);
             }
