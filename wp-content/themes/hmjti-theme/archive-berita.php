@@ -42,6 +42,7 @@ get_header();
               <div class="news-featured-body">
                 <div class="news-meta">
                   <span class="news-cat">
+                    <ion-icon name="pricetag-outline"></ion-icon>
                     <?php
                     $category = get_the_category();
                     if ($category) {

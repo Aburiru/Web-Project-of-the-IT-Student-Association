@@ -233,7 +233,7 @@
 
       <?php
       $featured_args = array(
-        'post_type' => 'post',
+        'post_type' => 'berita',
         'posts_per_page' => 1
       );
 
@@ -259,6 +259,7 @@
               <div class="news-meta">
 
                 <span class="news-cat">
+                  <ion-icon name="pricetag-outline"></ion-icon>
                   <?php
                   $category = get_the_category();
                   if ($category) {
@@ -300,7 +301,7 @@
 
         <?php
         $sidebar_args = array(
-          'post_type' => 'post',
+          'post_type' => 'berita',
           'posts_per_page' => 4,
           'offset' => 1
         );
@@ -315,6 +316,7 @@
             <div class="news-item">
 
               <span class="news-cat">
+                <ion-icon name="pricetag-outline"></ion-icon>
                 <?php
                 $category = get_the_category();
                 if ($category) {

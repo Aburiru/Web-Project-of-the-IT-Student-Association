@@ -889,7 +889,11 @@
     background: var(--surface);
     padding: 3px 10px;
     border-radius: 99px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
   }
+  .news-cat ion-icon { font-size: 12px; margin-right: 2px; }
 
   .news-date {
     font-size: 12px;
