@@ -2890,6 +2890,16 @@
   }
   .footer-contact-item span:first-child { color: var(--accent); flex-shrink: 0; font-size: 16px; margin-top: 1px; }
 
+  .footer-credit {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    user-select: none;
+  }
+  #credit-text { transition: var(--transition); }
+  .footer-credit:hover #credit-text { color: var(--accent); }
+
   .footer-bottom {
     padding: 20px 0;
     display: flex;
@@ -2905,6 +2915,80 @@
   }
 
   .footer-bottom a { color: var(--accent); }
+
+  /* ─── CREDIT MODAL ─── */
+  .dev-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .dev-modal[hidden] { display: none !important; }
+  .dev-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(10,37,64,0.8);
+    backdrop-filter: blur(4px);
+  }
+  .dev-modal__content {
+    position: relative;
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 32px;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: var(--shadow-lg);
+    animation: modalIn 0.25s var(--transition);
+  }
+  @keyframes modalIn { from { opacity: 0; transform: scale(0.95) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+  .dev-modal__close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    line-height: 1;
+    color: var(--text3);
+    cursor: pointer;
+    padding: 4px;
+    transition: var(--transition);
+  }
+  .dev-modal__close:hover { color: var(--accent); transform: rotate(90deg); }
+  .dev-modal__content h3 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: var(--primary);
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .dev-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px;
+    text-align: center;
+  }
+  .dev-list li {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--text);
+  }
+  .dev-list li:last-child { border-bottom: none; }
+  .dev-list li:first-child:hover {
+    color: var(--gold);
+    transition: color var(--transition);
+  }
+  .dev-note {
+    text-align: center;
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 13px;
+    margin: 0;
+  }
 
   /* ─── SCROLL TO TOP ─── */
   .scroll-top {

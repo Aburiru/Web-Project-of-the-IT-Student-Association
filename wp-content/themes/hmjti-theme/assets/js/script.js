@@ -234,3 +234,104 @@ galleryItems.forEach(item => {
     // Pagination clicks (event delegation)
     paginationContainer.addEventListener('click', handlePaginationClick);
 })();
+
+// ─── EASTER EGG ───
+(function() {
+  const trigger = document.getElementById('credit-trigger');
+  const textEl = document.getElementById('credit-text');
+  const suffixEl = document.getElementById('credit-suffix');
+  const heartEl = trigger.querySelector('.heart');
+  const modal = document.getElementById('dev-modal');
+  const closeBtn = modal?.querySelector('.dev-modal__close');
+  const backdrop = modal?.querySelector('.dev-modal__backdrop');
+
+  if (!trigger || !textEl || !suffixEl || !heartEl || !modal || !closeBtn || !backdrop) return;
+
+  const messages = [
+    { text: 'Okay, you found us.', suffix: '', showHeart: false },
+    { text: 'Built with caffeine', suffix: '☕', showHeart: false },
+    { text: 'And questionable amounts of debugging.', suffix: '', showHeart: false },
+  ];
+  let clickCount = 0;
+  let modalShown = false;
+  let modalOpening = false; // synchronous guard
+
+  function openModal() {
+    if (modalShown || !modal.hidden || modalOpening) return; // triple guard
+    modalOpening = true;
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+    modal.addEventListener('keydown', trapFocus);
+    modalShown = true;
+    modalOpening = false;
+  }
+
+  function closeModal() {
+    modal.hidden = true;
+    document.body.style.overflow = '';
+    trigger.focus();
+    modal.removeEventListener('keydown', trapFocus);
+    modalShown = false; // reset when closed
+  }
+
+  function trapFocus(e) {
+    if (e.key !== 'Tab') return;
+    const focusable = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault(); last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault(); first.focus();
+    }
+  }
+
+  let isProcessing = false;
+
+  function handleClick(e) {
+    if (isProcessing) return;
+    if (e.type === 'keydown' && (e.key !== 'Enter' && e.key !== ' ')) return;
+    if (e.type === 'keydown') e.preventDefault();
+
+    // Prevent any potential bubbling issues
+    e.stopPropagation();
+
+    // Early exit if modal already open
+    if (modalShown || !modal.hidden) {
+      isProcessing = false;
+      return;
+    }
+
+    isProcessing = true;
+
+    if (clickCount < messages.length) {
+      const msg = messages[clickCount];
+      textEl.textContent = msg.text;
+      suffixEl.textContent = msg.suffix;
+      heartEl.style.display = msg.showHeart ? 'inline' : 'none';
+      clickCount++;
+    } else {
+      heartEl.style.display = 'inline';
+      openModal();
+    }
+
+    // Allow next click after animation
+    setTimeout(() => { isProcessing = false; }, 300);
+  }
+
+  trigger.addEventListener('click', e => {
+    console.log('Trigger click', { isProcessing, modalShown, modalHidden: modal.hidden });
+    handleClick(e);
+  });
+  trigger.addEventListener('keydown', handleClick);
+
+  closeBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    console.log('Close btn click');
+    closeModal();
+  });
+
+  backdrop.addEventListener('click', closeModal);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
+})();

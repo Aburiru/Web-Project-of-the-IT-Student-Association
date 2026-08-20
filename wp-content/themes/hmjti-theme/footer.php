@@ -62,7 +62,30 @@
 
         <div class="footer-bottom">
             <p>&copy; <?php echo date('Y'); ?> HMJTI Himpunan Mahasiswa Jurusan Teknologi Informasi.</p>
-            <p>Made with ❤️ by <a href="#">Kelompok 1 Angkatan 2025</a></p>
+            <p class="footer-credit" id="credit-trigger" tabindex="0" role="button" aria-label="Easter egg">
+              <span id="credit-text">Crafted with </span>
+              <span class="heart">❤️</span>
+              <span id="credit-suffix"> by Kelompok 1 · 2025</span>
+            </p>
+        </div>
+
+        <!-- Developer Modal -->
+        <div class="dev-modal" id="dev-modal" role="dialog" aria-modal="true" aria-labelledby="dev-modal-title" hidden>
+          <div class="dev-modal__backdrop"></div>
+          <div class="dev-modal__content">
+            <button class="dev-modal__close" aria-label="Tutup">&times;</button>
+            <h3 id="dev-modal-title">Dikembangkan Oleh</h3>
+            <ul class="dev-list">
+              <li>Jibrillian Gilang Satriaji</li>
+              <li>Muhammad Maudhodi Fikri</li>
+              <li>Muhammad Fikri Nabillah</li>
+              <li>Trija Anjelia</li>
+              <li>Tiara Zhafirah</li>
+              <li>Nur Meldayanti</li>
+              <li>Kardiana Verlin Sau</li>
+            </ul>
+            <p class="dev-note">deployed successfully ✓</p>
+          </div>
         </div>
     </div>
 </footer>
