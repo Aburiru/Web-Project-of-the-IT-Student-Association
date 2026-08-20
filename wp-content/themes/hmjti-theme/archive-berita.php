@@ -25,17 +25,8 @@ get_header();
 
       <div class="news-grid archive-berita-grid">
         <?php
-        $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-        $berita_query = new WP_Query(array(
-          'post_type' => 'post',
-          'posts_per_page' => 9,
-          'paged' => $paged,
-          'orderby' => 'date',
-          'order' => 'DESC'
-        ));
-
-        if ($berita_query->have_posts()) :
-          while ($berita_query->have_posts()) : $berita_query->the_post(); ?>
+        if (have_posts()) :
+          while (have_posts()) : the_post(); ?>
 
             <div class="news-featured archive-berita-card">
               <div class="news-thumbnail archive-berita-thumbnail">
@@ -86,12 +77,14 @@ get_header();
       </div>
 
       <!-- Pagination -->
-      <?php if ($berita_query->max_num_pages > 1) : ?>
+      <?php
+      global $wp_query;
+      if ($wp_query->max_num_pages > 1) : ?>
         <div class="pagination archive-berita-pagination">
           <?php
           echo paginate_links(array(
-            'total' => $berita_query->max_num_pages,
-            'current' => $paged,
+            'total' => $wp_query->max_num_pages,
+            'current' => get_query_var('paged') ? get_query_var('paged') : 1,
             'prev_text' => '<ion-icon name="chevron-back-outline"></ion-icon>',
             'next_text' => '<ion-icon name="chevron-forward-outline"></ion-icon>',
             'type' => 'list',
@@ -101,8 +94,6 @@ get_header();
           ?>
         </div>
       <?php endif; ?>
-
-      <?php wp_reset_postdata(); ?>
 
       <?php else : ?>
         <div class="archive-berita-empty">

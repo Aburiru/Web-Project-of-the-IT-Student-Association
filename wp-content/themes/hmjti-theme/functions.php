@@ -35,6 +35,26 @@ function hmjti_theme_setup() {
 add_action('after_setup_theme', 'hmjti_theme_setup');
 
 /**
+ * Fix pagination for CPT 'berita' archive by modifying main query
+ */
+function hmjti_berita_archive_query($query) {
+    if (!is_admin() && $query->is_main_query() && is_post_type_archive('berita')) {
+        $query->set('posts_per_page', 9);
+        $query->set('orderby', 'date');
+        $query->set('order', 'DESC');
+    }
+}
+add_action('pre_get_posts', 'hmjti_berita_archive_query');
+
+/**
+ * Flush rewrite rules on theme switch/activation to ensure CPT archives work
+ */
+function hmjti_flush_rewrites() {
+    flush_rewrite_rules();
+}
+add_action('after_switch_theme', 'hmjti_flush_rewrites');
+
+/**
  * AJAX Handler untuk Event Filtering (Fixed & Complete)
  */
 function hmjti_filter_events_ajax() {
