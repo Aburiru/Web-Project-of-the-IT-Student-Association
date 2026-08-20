@@ -50,6 +50,7 @@ get_header();
         ));
 
         if ($event_query->have_posts()) :
+          $today_ts = strtotime(date('Y-m-d'));
           while ($event_query->have_posts()) : $event_query->the_post();
             $tanggal = get_field('tanggal_event');
             $lokasi = get_field('lokasi_event');
@@ -58,12 +59,12 @@ get_header();
             $thumbnail = get_the_post_thumbnail_url(get_the_ID(), 'large');
             $badge = '';
             $badge_class = '';
-            if ($tanggal) {
-              $today = date('Y-m-d');
-              if ($tanggal > $today) {
+            $event_ts = strtotime($tanggal);
+            if ($event_ts !== false) {
+              if ($event_ts > $today_ts) {
                 $badge = 'Akan Datang';
                 $badge_class = 'badge-upcoming';
-              } elseif ($tanggal === $today) {
+              } elseif ($event_ts == $today_ts) {
                 $badge = 'Sedang Berlangsung';
                 $badge_class = 'badge-today';
               } else {
@@ -75,9 +76,9 @@ get_header();
             <div class="event-card archive-event-card" data-event-date="<?php echo esc_attr($tanggal); ?>">
               <div class="event-card-top">
                 <div class="event-date-box">
-                  <?php if ($tanggal): ?>
-                    <div class="day"><?php echo date('d', strtotime($tanggal)); ?></div>
-                    <div class="month"><?php echo date('M', strtotime($tanggal)); ?></div>
+                  <?php if ($event_ts !== false): ?>
+                    <div class="day"><?php echo date('d', $event_ts); ?></div>
+                    <div class="month"><?php echo date('M', $event_ts); ?></div>
                   <?php endif; ?>
                 </div>
                 <div class="event-info">
@@ -92,8 +93,8 @@ get_header();
               <div class="event-card-body">
                 <div class="event-detail">
                   <span class="icon"><ion-icon name="calendar-outline"></ion-icon></span>
-                  <?php if ($tanggal): ?>
-                    <?php echo date('d F Y', strtotime($tanggal)); ?>
+                  <?php if ($event_ts !== false): ?>
+                    <?php echo date('d F Y', $event_ts); ?>
                   <?php endif; ?>
                 </div>
                 <div class="event-detail">
@@ -118,9 +119,9 @@ get_header();
         ?>
       </div>
 
-      <!-- Pagination -->
-      <?php if ($event_query->max_num_pages > 1) : ?>
-        <div class="pagination archive-event-pagination" id="event-pagination">
+      <!-- Pagination (Always present in DOM for JS) -->
+      <div class="pagination archive-event-pagination" id="event-pagination">
+        <?php if ($event_query->max_num_pages > 1) : ?>
           <?php
           echo paginate_links(array(
             'total' => $event_query->max_num_pages,
@@ -132,8 +133,8 @@ get_header();
             'mid_size' => 2
           ));
           ?>
-        </div>
-      <?php endif; ?>
+        <?php endif; ?>
+      </div>
 
       <?php wp_reset_postdata(); ?>
 

@@ -179,11 +179,7 @@ galleryItems.forEach(item => {
                     emptyContainer.style.display = data.data.html.includes('archive-event-empty') ? 'block' : 'none';
                 }
                 
-                // Force visible untuk elemen yang baru disuntikkan via AJAX
-                gridContainer.querySelectorAll('.fade-in').forEach(el => {
-                    el.classList.add('visible');
-                });
-            } else {
+                            } else {
                 console.error('Filter error:', data.data);
             }
         } catch (error) {
