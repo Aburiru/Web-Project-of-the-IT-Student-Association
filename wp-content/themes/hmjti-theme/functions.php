@@ -101,7 +101,7 @@ function hmjti_filter_events_ajax() {
                 : 'Event';
             $badge_class = $valid_date ? str_replace(' ', '-', strtolower($badge)) : 'badge-event';
             ?>
-            <div class="event-card" data-event-date="<?php echo esc_attr($tanggal); ?>">
+            <div class="event-card archive-event-card" data-event-date="<?php echo esc_attr($tanggal); ?>">
               <div class="event-card-top">
                 <div class="event-date-box">
                   <?php if ($valid_date): ?>
