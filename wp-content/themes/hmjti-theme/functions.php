@@ -128,7 +128,7 @@ function hmjti_filter_events_ajax() {
         }
         wp_reset_postdata();
     } else {
-        echo '<div class="archive-event-empty"><h3>Belum Ada Event</h3><p>Belum ada agenda kegiatan yang sesuai dengan filter ini.</p></div>';
+        echo '<div class="archive-event-empty"><ion-icon name="calendar-outline"></ion-icon><h3>Belum Ada Event</h3><p>Belum ada agenda kegiatan yang sesuai dengan filter ini.</p></div>';
     }
 
     $html = ob_get_clean();
